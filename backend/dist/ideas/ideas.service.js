@@ -16,14 +16,19 @@ let IdeasService = class IdeasService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async saveIdea(content) {
+    async saveIdea(chatId) {
         return this.prisma.idea.create({
-            data: { content },
+            data: {
+                chatId,
+            },
         });
     }
     async getAllIdeas() {
         return this.prisma.idea.findMany({
-            orderBy: { createdAt: 'desc' },
+            include: {
+                chat: true,
+            },
+            orderBy: { createdAt: "desc" },
         });
     }
     async resetIdeas() {

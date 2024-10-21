@@ -1,19 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
 
 @Injectable()
 export class IdeasService {
   constructor(private prisma: PrismaService) {}
 
-  async saveIdea(content: string) {
+  async saveIdea(chatId: number) {
     return this.prisma.idea.create({
-      data: { content },
+      data: {
+        chatId,
+      },
     });
   }
 
   async getAllIdeas() {
     return this.prisma.idea.findMany({
-      orderBy: { createdAt: 'desc' },
+      include: {
+        chat: true,
+      },
+      orderBy: { createdAt: "desc" },
     });
   }
 

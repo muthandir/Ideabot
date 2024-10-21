@@ -6,9 +6,9 @@ export declare class ChatService {
     constructor(prisma: PrismaService, llmService: LlmService);
     generateResponse(message: string): Promise<string>;
     getChatHistory(): Promise<{
-        content: string;
-        createdAt: Date;
         id: number;
+        createdAt: Date;
+        content: string;
         sender: string;
     }[]>;
     resetChat(): Promise<void>;

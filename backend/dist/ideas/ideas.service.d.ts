@@ -1,18 +1,25 @@
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from "../prisma/prisma.service";
 export declare class IdeasService {
     private prisma;
     constructor(prisma: PrismaService);
-    saveIdea(content: string): Promise<{
-        content: string;
+    saveIdea(chatId: number): Promise<{
+        id: number;
+        chatId: number;
         createdAt: Date;
         updatedAt: Date;
-        id: number;
     }>;
-    getAllIdeas(): Promise<{
-        content: string;
+    getAllIdeas(): Promise<({
+        chat: {
+            id: number;
+            createdAt: Date;
+            content: string;
+            sender: string;
+        };
+    } & {
+        id: number;
+        chatId: number;
         createdAt: Date;
         updatedAt: Date;
-        id: number;
-    }[]>;
+    })[]>;
     resetIdeas(): Promise<void>;
 }

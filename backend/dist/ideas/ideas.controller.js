@@ -15,12 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IdeasController = void 0;
 const common_1 = require("@nestjs/common");
 const ideas_service_1 = require("./ideas.service");
+const idea_dto_1 = require("./dto/idea.dto");
 let IdeasController = class IdeasController {
     constructor(ideasService) {
         this.ideasService = ideasService;
     }
-    saveIdea(idea) {
-        this.ideasService.saveIdea(idea);
+    saveIdea(ideaDto) {
+        this.ideasService.saveIdea(ideaDto.chatId);
         return { message: 'Idea saved successfully' };
     }
     getAllIdeas() {
@@ -29,9 +30,10 @@ let IdeasController = class IdeasController {
 };
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)('idea')),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe({ transform: true })),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [idea_dto_1.IdeaDto]),
     __metadata("design:returntype", void 0)
 ], IdeasController.prototype, "saveIdea", null);
 __decorate([
@@ -41,7 +43,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], IdeasController.prototype, "getAllIdeas", null);
 IdeasController = __decorate([
-    (0, common_1.Controller)('ideas'),
+    (0, common_1.Controller)("ideas"),
     __metadata("design:paramtypes", [ideas_service_1.IdeasService])
 ], IdeasController);
 exports.IdeasController = IdeasController;
