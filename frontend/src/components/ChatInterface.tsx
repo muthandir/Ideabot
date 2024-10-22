@@ -46,8 +46,7 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
     const textToSave = selectedText || messageText;
 
     const ideaDto: Idea = {
-      title: `Idea from Chat ${chatId}`,
-      description: textToSave,
+      content: textToSave,
       chatId: chatId,
     };
 

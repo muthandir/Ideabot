@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import ChatInterface from './components/ChatInterface';
-import IdeaList from './components/IdeaList';
-import ResetButton from './components/ResetButton';
-import axios from 'axios';
-import { Idea } from './types/idea';
+import React, { useState, useEffect } from "react";
+import ChatInterface from "./components/ChatInterface";
+import IdeaList from "./components/IdeaList";
+import ResetButton from "./components/ResetButton";
+import axios from "axios";
+import { Idea } from "./types/idea";
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -15,8 +15,11 @@ function App() {
   const handleSaveIdea = async (idea: Idea) => {
     try {
       console.log("Saving idea:", idea);
-      const response = await axios.post<Idea>("http://localhost:3001/ideas", idea);
-      setIdeas(prevIdeas => [...prevIdeas, response.data]);
+      const response = await axios.post<Idea>(
+        "http://localhost:3001/ideas",
+        idea
+      );
+      setIdeas((prevIdeas) => [idea, ...prevIdeas]);
     } catch (error) {
       console.error("Error saving idea:", error);
     }
@@ -35,7 +38,7 @@ function App() {
     try {
       console.log("Fetching ideas");
       const response = await axios.get<Idea[]>("http://localhost:3001/ideas");
-      setIdeas(prevIdeas => [...prevIdeas, ...response.data]);
+      setIdeas((prevIdeas) => [...prevIdeas, ...response.data]);
     } catch (error) {
       console.error("Error fetching ideas:", error);
     }

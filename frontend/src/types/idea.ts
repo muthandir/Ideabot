@@ -1,7 +1,6 @@
 export interface Idea {
   id?: number;
-  title: string;
-  description: string;
+  content: string;
   chatId: number;
   createdAt?: string;
   updatedAt?: string;

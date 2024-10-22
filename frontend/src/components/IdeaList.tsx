@@ -16,8 +16,7 @@ function IdeaList({ ideas }: IdeaListProps) {
       <ul>
         {ideas.map(idea => (
           <li key={idea.id}>
-            <h4>{idea.description}</h4>
-            <p>{idea.description}</p>
+            <p>{idea.content}</p>
             <small>Created at: {new Date(idea.createdAt!).toLocaleString()}</small>
           </li>
         ))}
