@@ -1,24 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Idea } from "../types/idea";
 
-function ChatInterface({ onSaveIdea }) {
-  const [messages, setMessages] = useState([]);
+interface Message {
+  text: string;
+  sender: "user" | "bot";
+  chatId?: number;
+}
+
+interface ChatInterfaceProps {
+  onSaveIdea: (idea: Idea) => Promise<void>;
+}
+
+function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [selectedText, setSelectedText] = useState("");
-  const [ideas, setIdeas] = useState([]);
 
   const sendMessage = async () => {
     if (input.trim() === "") return;
 
-    const newMessage = { text: input, sender: "user" };
+    const newMessage: Message = { text: input, sender: "user" };
     setMessages([...messages, newMessage]);
     setInput("");
 
     try {
-      const response = await axios.post("http://localhost:3001/chat", {
-        message: input,
-      });
-      const botMessage = {
+      const response = await axios.post<{ response: string; chatId: number }>(
+        "http://localhost:3001/chat",
+        {
+          message: input,
+        }
+      );
+      const botMessage: Message = {
         text: response.data.response,
         chatId: response.data.chatId,
         sender: "bot",
@@ -29,15 +42,21 @@ function ChatInterface({ onSaveIdea }) {
     }
   };
 
-  const handleSaveIdea = async (messageText, chatId) => {
+  const handleSaveIdea = async (messageText: string, chatId: number) => {
     const textToSave = selectedText || messageText;
 
-    onSaveIdea({ chatId, content: textToSave }); // Update parent component's state
+    const ideaDto: Idea = {
+      title: `Idea from Chat ${chatId}`,
+      description: textToSave,
+      chatId: chatId,
+    };
+
+    await onSaveIdea(ideaDto);
     setSelectedText("");
   };
 
   const handleMouseUp = () => {
-    const selection = window.getSelection().toString();
+    const selection = window.getSelection()?.toString();
     if (selection) {
       setSelectedText(selection);
     }
@@ -49,9 +68,9 @@ function ChatInterface({ onSaveIdea }) {
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
             {message.text}
-            {message.sender === "bot" && (
+            {message.sender === "bot" && message.chatId && (
               <button
-                onClick={() => handleSaveIdea(message.text, message.chatId)}
+                onClick={() => handleSaveIdea(message.text, message.chatId!)}
               >
                 Save {selectedText ? "Selected" : "Idea"}
               </button>

@@ -1,6 +1,10 @@
 import React from 'react';
 
-function ResetButton({ onReset }) {
+interface ResetButtonProps {
+  onReset: () => void;
+}
+
+function ResetButton({ onReset }: ResetButtonProps) {
   return (
     <button className="reset-button" onClick={onReset}>
       Reset Conversation and Ideas
