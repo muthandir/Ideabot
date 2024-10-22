@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Idea } from "../types/idea";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 interface Message {
   text: string;
@@ -12,15 +14,21 @@ interface ChatInterfaceProps {
   onSaveIdea: (idea: Idea) => Promise<void>;
 }
 
+// Validation schema using Yup
+const validationSchema = Yup.object().shape({
+  message: Yup.string()
+    .trim()
+    .required("Please enter a message before sending."),
+});
+
 function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [selectedText, setSelectedText] = useState("");
 
-  const sendMessage = async () => {
-    if (input.trim() === "") return;
+  const sendMessage = async (text: string) => {
+    if (text.trim() === "") return;
 
-    const newMessage: Message = { text: input, sender: "user" };
+    const newMessage: Message = { text, sender: "user" };
     setMessages([...messages, newMessage]);
     setInput("");
 
@@ -28,7 +36,7 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
       const response = await axios.post<{ response: string; chatId: number }>(
         "http://localhost:3001/chat",
         {
-          message: input,
+          message: text,
         }
       );
       const botMessage: Message = {
@@ -36,6 +44,7 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
         chatId: response.data.chatId,
         sender: "bot",
       };
+      console.log("Bot message:", botMessage);
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
@@ -43,27 +52,17 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
   };
 
   const handleSaveIdea = async (messageText: string, chatId: number) => {
-    const textToSave = selectedText || messageText;
-
     const ideaDto: Idea = {
-      content: textToSave,
+      content: messageText,
       chatId: chatId,
     };
 
     await onSaveIdea(ideaDto);
-    setSelectedText("");
-  };
-
-  const handleMouseUp = () => {
-    const selection = window.getSelection()?.toString();
-    if (selection) {
-      setSelectedText(selection);
-    }
   };
 
   return (
     <div className="chat-interface">
-      <div className="chat-history" onMouseUp={handleMouseUp}>
+      <div className="chat-history">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
             {message.text}
@@ -71,21 +70,34 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
               <button
                 onClick={() => handleSaveIdea(message.text, message.chatId!)}
               >
-                Save {selectedText ? "Selected" : "Idea"}
+                Save Idea
               </button>
             )}
           </div>
         ))}
       </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-        />
-        <button onClick={sendMessage}>Send</button>
-      </div>
+      <Formik
+        initialValues={{ message: "" }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { resetForm }) => {
+          sendMessage(values.message);
+          resetForm();
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form className="chat-input">
+            <Field type="text" name="message" />
+            <button type="submit" disabled={isSubmitting}>
+              Send
+            </button>
+            <ErrorMessage
+              name="message"
+              component="p"
+              className="error-message"
+            />
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }
