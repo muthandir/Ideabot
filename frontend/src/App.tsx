@@ -19,7 +19,8 @@ function App() {
         "http://localhost:3001/ideas",
         idea
       );
-      setIdeas((prevIdeas) => [idea, ...prevIdeas]);
+      console.log("Idea saved:", { ...idea, ...response.data });
+      setIdeas((prevIdeas) => [{ ...idea, ...response.data }, ...prevIdeas]);
     } catch (error) {
       console.error("Error saving idea:", error);
     }
@@ -38,7 +39,7 @@ function App() {
     try {
       console.log("Fetching ideas");
       const response = await axios.get<Idea[]>("http://localhost:3001/ideas");
-      setIdeas((prevIdeas) => [...prevIdeas, ...response.data]);
+      setIdeas((prevIdeas) => response.data);
     } catch (error) {
       console.error("Error fetching ideas:", error);
     }

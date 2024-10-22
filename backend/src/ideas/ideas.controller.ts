@@ -1,4 +1,11 @@
-import { Controller, Post, Body, Get, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { IdeasService } from "./ideas.service";
 import { IdeaDto } from "./dto/idea.dto";
 
@@ -8,9 +15,8 @@ export class IdeasController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  saveIdea(@Body() ideaDto: IdeaDto) {
-    this.ideasService.saveIdea(ideaDto.chatId);
-    return { message: 'Idea saved successfully' };
+  async saveIdea(@Body() ideaDto: IdeaDto) {
+    return this.ideasService.saveIdea(ideaDto.chatId);
   }
 
   @Get()
