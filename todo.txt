@@ -4,7 +4,7 @@ deployment
 tests
 Full Stack Assignment Considerations:
 
-1. Architecture:
+1. Architecture: hard coded valuelari kaldir
 
 
 2. Frontend:   - State management (e.g., Redux, Vuex)

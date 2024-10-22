@@ -1,18 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { LlmService } from '../llm/llm.service';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { LlmService } from "../llm/llm.service";
 
 @Injectable()
 export class ChatService {
-  constructor(
-    private prisma: PrismaService,
-    private llmService: LlmService
-  ) {}
+  constructor(private prisma: PrismaService, private llmService: LlmService) {}
 
-  async generateResponse(message: string): Promise<string> {
+  async generateResponse(
+    message: string
+  ): Promise<{ response: string; chatId: number }> {
     // Store user message
     await this.prisma.chatMessage.create({
-      data: { content: message, sender: 'user' },
+      data: { content: message, sender: "user" },
     });
 
     // Generate response using LLM service
@@ -24,21 +23,22 @@ export class ChatService {
     try {
       response = await this.llmService.generateResponse(prompt);
     } catch (error) {
-      console.error('Error generating LLM response:', error);
-      response = "I'm sorry, but I encountered an error while processing your request. Please try again later.";
+      console.error("Error generating LLM response:", error);
+      response =
+        "I'm sorry, but I encountered an error while processing your request. Please try again later.";
     }
 
-    // Store bot response
-    await this.prisma.chatMessage.create({
-      data: { content: response, sender: 'bot' },
+    // Store bot response and get the created message
+    const botMessage = await this.prisma.chatMessage.create({
+      data: { content: response, sender: "bot" },
     });
 
-    return response;
+    return { response, chatId: botMessage.id };
   }
 
   async getChatHistory() {
     return this.prisma.chatMessage.findMany({
-      orderBy: { createdAt: 'asc' },
+      orderBy: { createdAt: "asc" },
     });
   }
 

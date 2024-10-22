@@ -20,19 +20,18 @@ let ChatController = class ChatController {
         this.chatService = chatService;
     }
     async chat(message) {
-        const response = await this.chatService.generateResponse(message);
-        return { message: response };
+        return this.chatService.generateResponse(message);
     }
 };
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)('message')),
+    __param(0, (0, common_1.Body)("message")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "chat", null);
 ChatController = __decorate([
-    (0, common_1.Controller)('chat'),
+    (0, common_1.Controller)("chat"),
     __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], ChatController);
 exports.ChatController = ChatController;

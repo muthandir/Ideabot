@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Idea" (
     "id" SERIAL NOT NULL,
-    "content" TEXT NOT NULL,
+    "chatId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -17,3 +17,6 @@ CREATE TABLE "ChatMessage" (
 
     CONSTRAINT "ChatMessage_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "Idea" ADD CONSTRAINT "Idea_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "ChatMessage"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

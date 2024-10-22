@@ -1,15 +1,18 @@
-import { PrismaService } from '../prisma/prisma.service';
-import { LlmService } from '../llm/llm.service';
+import { PrismaService } from "../prisma/prisma.service";
+import { LlmService } from "../llm/llm.service";
 export declare class ChatService {
     private prisma;
     private llmService;
     constructor(prisma: PrismaService, llmService: LlmService);
-    generateResponse(message: string): Promise<string>;
+    generateResponse(message: string): Promise<{
+        response: string;
+        chatId: number;
+    }>;
     getChatHistory(): Promise<{
         id: number;
-        createdAt: Date;
         content: string;
         sender: string;
+        createdAt: Date;
     }[]>;
     resetChat(): Promise<void>;
 }

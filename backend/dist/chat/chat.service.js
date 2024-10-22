@@ -20,7 +20,7 @@ let ChatService = class ChatService {
     }
     async generateResponse(message) {
         await this.prisma.chatMessage.create({
-            data: { content: message, sender: 'user' },
+            data: { content: message, sender: "user" },
         });
         const prompt = `You are an AI assistant helping with idea brainstorming. 
     The user's message is: "${message}"
@@ -30,17 +30,18 @@ let ChatService = class ChatService {
             response = await this.llmService.generateResponse(prompt);
         }
         catch (error) {
-            console.error('Error generating LLM response:', error);
-            response = "I'm sorry, but I encountered an error while processing your request. Please try again later.";
+            console.error("Error generating LLM response:", error);
+            response =
+                "I'm sorry, but I encountered an error while processing your request. Please try again later.";
         }
-        await this.prisma.chatMessage.create({
-            data: { content: response, sender: 'bot' },
+        const botMessage = await this.prisma.chatMessage.create({
+            data: { content: response, sender: "bot" },
         });
-        return response;
+        return { response, chatId: botMessage.id };
     }
     async getChatHistory() {
         return this.prisma.chatMessage.findMany({
-            orderBy: { createdAt: 'asc' },
+            orderBy: { createdAt: "asc" },
         });
     }
     async resetChat() {
@@ -49,8 +50,7 @@ let ChatService = class ChatService {
 };
 ChatService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
-        llm_service_1.LlmService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService, llm_service_1.LlmService])
 ], ChatService);
 exports.ChatService = ChatService;
 //# sourceMappingURL=chat.service.js.map
