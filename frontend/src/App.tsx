@@ -4,10 +4,14 @@ import IdeaList from "./components/IdeaList";
 import ResetButton from "./components/ResetButton";
 import axios from "axios";
 import { Idea } from "./types/idea";
-import './chat.css'; // Import the CSS file
+import "./chat.css"; // Import the CSS file
+import { Message } from "./types/message";
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
+  const [messages, setMessages] = useState<
+    { text: string; sender: "user" | "bot"; chatId?: number }[]
+  >([]);
 
   useEffect(() => {
     fetchIdeas();
@@ -27,11 +31,16 @@ function App() {
     }
   };
 
+  const handleSaveMessage = async (message: Message) => {
+    setMessages((prevMessages) => [...prevMessages, message]);
+  };
+
   const handleReset = async () => {
     try {
       console.log("Resetting");
       //await axios.post("http://localhost:3001/reset");
       setIdeas([]);
+      setMessages([]); // Clear chat messages
     } catch (error) {
       console.error("Error resetting:", error);
     }
@@ -50,9 +59,13 @@ function App() {
   return (
     <div className="App">
       <h1>Idea Brainstorming Chatbot</h1>
-      <ChatInterface onSaveIdea={handleSaveIdea} />
-      <IdeaList ideas={ideas} />
+      <ChatInterface
+        onSaveIdea={handleSaveIdea}
+        messages={messages}
+        onSaveMessage={handleSaveMessage}
+      />
       <ResetButton onReset={handleReset} />
+      <IdeaList ideas={ideas} />
     </div>
   );
 }

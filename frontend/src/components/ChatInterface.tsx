@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import { Idea } from "../types/idea";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
-interface Message {
-  text: string;
-  sender: "user" | "bot";
-  chatId?: number;
-}
+import { Message } from "../types/message";
 
 interface ChatInterfaceProps {
   onSaveIdea: (idea: Idea) => Promise<void>;
+  onSaveMessage: (messages: Message) => Promise<void>;
+  messages: Message[]; // Accept messages as a prop
 }
 
 // Validation schema using Yup
@@ -21,14 +18,17 @@ const validationSchema = Yup.object().shape({
     .required("Please enter a message before sending."),
 });
 
-function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
-
+function ChatInterface({
+  onSaveIdea,
+  messages,
+  onSaveMessage,
+}: ChatInterfaceProps) {
   const sendMessage = async (text: string) => {
     if (text.trim() === "") return;
 
     const newMessage: Message = { text, sender: "user" };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    //  setMessages((prevMessages) => [...prevMessages, newMessage]);
+    await onSaveMessage(newMessage);
 
     try {
       const response = await axios.post<{ response: string; chatId: number }>(
@@ -43,7 +43,8 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
         sender: "bot",
       };
       console.log("Bot message:", botMessage);
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      //setMessages((prevMessages) => [...prevMessages, botMessage]);
+      await onSaveMessage(botMessage);
     } catch (error) {
       console.error("Error sending message:", error);
     }
