@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Idea } from "../types/idea";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -23,11 +23,16 @@ function ChatInterface({
   messages,
   onSaveMessage,
 }: ChatInterfaceProps) {
+  const [loadingSend, setLoadingSend] = useState(false); // Loading state for send button
+  const [loadingSave, setLoadingSave] = useState<number | null>(null); // Loading state for save button
+
   const sendMessage = async (text: string) => {
     if (text.trim() === "") return;
 
     const newMessage: Message = { text, sender: "user" };
     await onSaveMessage(newMessage);
+
+    setLoadingSend(true); // Set loading state for send button
 
     try {
       const response = await axios.post<{ response: string; chatId: number }>(
@@ -45,6 +50,8 @@ function ChatInterface({
       await onSaveMessage(botMessage);
     } catch (error) {
       console.error("Error sending message:", error);
+    } finally {
+      setLoadingSend(false); // Reset loading state
     }
   };
 
@@ -54,23 +61,33 @@ function ChatInterface({
       chatId: chatId,
     };
 
+    setLoadingSave(chatId); // Set loading state for the specific chatId
+
     await onSaveIdea(ideaDto);
+
+    setLoadingSave(null); // Reset loading state
   };
 
   return (
     <div className="chat-interface">
       <div className="chat-history">
-        {messages.length === 0 ? ( // Check if messages array is empty
-          <p>Ready to do some brainstorming?</p> // Display this message if empty
+        {messages.length === 0 ? (
+          <p>Ready to do some brainstorming?</p>
         ) : (
           messages.map((message, index) => (
             <div key={index} className={`message ${message.sender}`}>
               {message.text}
               {message.sender === "bot" && message.chatId && (
                 <button
+                  type="button"
                   onClick={() => handleSaveIdea(message.text, message.chatId!)}
+                  disabled={loadingSave === message.chatId} // Disable if loading
                 >
-                  Save Idea
+                  {loadingSave === message.chatId ? (
+                    <span className="spinner" /> // Show spinner
+                  ) : (
+                    "Save Idea"
+                  )}
                 </button>
               )}
             </div>
@@ -99,8 +116,8 @@ function ChatInterface({
                 className="error-message"
               />
             </div>
-            <button type="submit" disabled={isSubmitting}>
-              Send
+            <button type="submit" disabled={isSubmitting || loadingSend}>
+              {loadingSend ? <span className="spinner" /> : "Send"}
             </button>
           </Form>
         )}

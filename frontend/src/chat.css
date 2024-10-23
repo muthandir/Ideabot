@@ -85,7 +85,7 @@ body {
 }
 
 .user {
-    background-color: #924f4f;
+    background-color: #806c6c;
     align-self: flex-end;
     border-bottom-right-radius: 0;
 }
@@ -234,4 +234,21 @@ button:hover {
 
 .message {
     animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Add this to your chat.css */
+.spinner {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #fff; /* Change this color to match your theme */
+  border-radius: 50%;
+  width: 12px; /* Adjust size as needed */
+  height: 12px; /* Adjust size as needed */
+  animation: spin 0.6s linear infinite;
+  display: inline-block; /* Align with text */
+  margin-right: 5px; /* Space between spinner and text */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
