@@ -38,7 +38,7 @@ function App() {
   const handleReset = async () => {
     try {
       console.log("Resetting");
-      //await axios.post("http://localhost:3001/reset");
+      await axios.post("http://localhost:3001/ideas/reset");
       setIdeas([]);
       setMessages([]); // Clear chat messages
     } catch (error) {

@@ -27,7 +27,6 @@ function ChatInterface({
     if (text.trim() === "") return;
 
     const newMessage: Message = { text, sender: "user" };
-    //  setMessages((prevMessages) => [...prevMessages, newMessage]);
     await onSaveMessage(newMessage);
 
     try {
@@ -43,7 +42,6 @@ function ChatInterface({
         sender: "bot",
       };
       console.log("Bot message:", botMessage);
-      //setMessages((prevMessages) => [...prevMessages, botMessage]);
       await onSaveMessage(botMessage);
     } catch (error) {
       console.error("Error sending message:", error);
@@ -62,18 +60,22 @@ function ChatInterface({
   return (
     <div className="chat-interface">
       <div className="chat-history">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.sender}`}>
-            {message.text}
-            {message.sender === "bot" && message.chatId && (
-              <button
-                onClick={() => handleSaveIdea(message.text, message.chatId!)}
-              >
-                Save Idea
-              </button>
-            )}
-          </div>
-        ))}
+        {messages.length === 0 ? ( // Check if messages array is empty
+          <p>Ready to do some brainstorming?</p> // Display this message if empty
+        ) : (
+          messages.map((message, index) => (
+            <div key={index} className={`message ${message.sender}`}>
+              {message.text}
+              {message.sender === "bot" && message.chatId && (
+                <button
+                  onClick={() => handleSaveIdea(message.text, message.chatId!)}
+                >
+                  Save Idea
+                </button>
+              )}
+            </div>
+          ))
+        )}
       </div>
       <Formik
         initialValues={{ message: "" }}

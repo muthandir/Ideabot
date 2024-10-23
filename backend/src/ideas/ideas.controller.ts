@@ -23,4 +23,9 @@ export class IdeasController {
   getAllIdeas() {
     return this.ideasService.getAllIdeas();
   }
+
+  @Post("reset")
+  resetIdeas() {
+    return this.ideasService.resetIdeas();
+  }
 }
