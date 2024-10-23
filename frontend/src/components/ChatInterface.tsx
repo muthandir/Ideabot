@@ -31,7 +31,7 @@ function ChatInterface({
 
     try {
       const response = await axios.post<{ response: string; chatId: number }>(
-        "http://localhost:3001/chat",
+        "https://ideabot-vo2n.onrender.com/chat",
         {
           message: text,
         }

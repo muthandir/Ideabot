@@ -21,7 +21,7 @@ function App() {
     try {
       console.log("Saving idea:", idea);
       const response = await axios.post<Idea>(
-        "http://localhost:3001/ideas",
+        "https://ideabot-vo2n.onrender.com/ideas",
         idea
       );
       console.log("Idea saved:", { ...idea, ...response.data });
@@ -38,7 +38,7 @@ function App() {
   const handleReset = async () => {
     try {
       console.log("Resetting");
-      await axios.post("http://localhost:3001/ideas/reset");
+      await axios.post("https://ideabot-vo2n.onrender.com/ideas/reset");
       setIdeas([]);
       setMessages([]); // Clear chat messages
     } catch (error) {
@@ -49,7 +49,7 @@ function App() {
   const fetchIdeas = async () => {
     try {
       console.log("Fetching ideas");
-      const response = await axios.get<Idea[]>("http://localhost:3001/ideas");
+      const response = await axios.get<Idea[]>("https://ideabot-vo2n.onrender.com/ideas");
       setIdeas((prevIdeas) => response.data);
     } catch (error) {
       console.error("Error fetching ideas:", error);
