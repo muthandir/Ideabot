@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import ChatInterface from "./components/ChatInterface";
-import IdeaList from "./components/IdeaList";
-import ResetButton from "./components/ResetButton";
-import { Idea } from "./types/idea";
-import "./chat.css"; // Import the CSS file
-import { Message } from "./types/message";
+import React, { useState, useEffect } from 'react';
+import ChatInterface from './components/ChatInterface';
+import IdeaList from './components/IdeaList';
+import ResetButton from './components/ResetButton';
+import { Idea } from './types/idea';
+import './chat.css'; // Import the CSS file
+import { Message } from './types/message';
 import {
   fetchIdeas,
   saveIdea as apiSaveIdea,
   resetIdeas,
-} from "./services/api"; // Import the API functions
+} from './services/api'; // Import the API functions
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [messages, setMessages] = useState<
-    { text: string; sender: "user" | "bot"; chatId?: number }[]
+    { text: string; sender: 'user' | 'bot'; chatId?: number }[]
   >([]);
 
   useEffect(() => {
@@ -28,10 +28,10 @@ function App() {
   const handleSaveIdea = async (idea: Idea) => {
     try {
       const savedIdea = await apiSaveIdea(idea); // Use the API function
-      console.log("Saved idea:", savedIdea);
+      console.log('Saved idea:', savedIdea);
       setIdeas((prevIdeas) => [{ ...idea, ...savedIdea }, ...prevIdeas]);
     } catch (error) {
-      console.error("Error saving idea:", error);
+      console.error('Error saving idea:', error);
     }
   };
 
@@ -41,12 +41,12 @@ function App() {
 
   const handleReset = async () => {
     try {
-      console.log("Resetting");
+      console.log('Resetting');
       await resetIdeas(); // Use the API function
       setIdeas([]);
       setMessages([]); // Clear chat messages
     } catch (error) {
-      console.error("Error resetting:", error);
+      console.error('Error resetting:', error);
     }
   };
 
