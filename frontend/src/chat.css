@@ -85,7 +85,7 @@ body {
 }
 
 .user {
-    background-color: #806c6c;
+    background-color: #924f4f;
     align-self: flex-end;
     border-bottom-right-radius: 0;
 }
@@ -169,11 +169,31 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     transition: background 0.3s, transform 0.2s;
+    position: relative; /* Set position to relative for absolute positioning of the button */
 }
 
 .idea-list li:hover {
     background: #3a3a3a;
     transform: translateY(-1px);
+}
+
+/* Style for the delete button */
+.idea-list button {
+    position: absolute; /* Position the button absolutely */
+    top: 3px; /* Adjust the top position */
+    right: 3px; /* Adjust the right position */
+    border-radius: 6px;
+    color: #b8a8a8;
+    padding: 3px 5px 3px 5px;
+    cursor: pointer;
+    background: none; /* Remove default button background */
+    border: solid; /* Remove default button border */
+    font-size: 9px; /* Adjust font size as needed */
+    transition: color 0.3s; /* Add transition for hover effect */
+}
+
+.idea-list button:hover {
+    color: rgb(160, 153, 153); /* Change color on hover */
 }
 
 /* Scrollbar Styles */
@@ -236,19 +256,21 @@ button:hover {
     animation: fadeIn 0.3s ease-in-out;
 }
 
+
 /* Add this to your chat.css */
 .spinner {
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid #fff; /* Change this color to match your theme */
-  border-radius: 50%;
-  width: 12px; /* Adjust size as needed */
-  height: 12px; /* Adjust size as needed */
-  animation: spin 0.6s linear infinite;
-  display: inline-block; /* Align with text */
-  margin-right: 5px; /* Space between spinner and text */
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff; /* Change this color to match your theme */
+    border-radius: 50%;
+    width: 12px; /* Adjust size as needed */
+    height: 12px; /* Adjust size as needed */
+    animation: spin 0.6s linear infinite;
+    display: inline-block; /* Align with text */
+    margin-right: 5px; /* Space between spinner and text */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

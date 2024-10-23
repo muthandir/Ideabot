@@ -56,6 +56,10 @@ function App() {
     }
   };
 
+  const handleDeleteIdea = (id: number) => {
+    setIdeas(prevIdeas => prevIdeas.filter(idea => idea.id !== id));
+  };
+
   return (
     <div className="App">
       <h1>Idea Brainstorming Chatbot</h1>
@@ -65,7 +69,7 @@ function App() {
         onSaveMessage={handleSaveMessage}
       />
       <ResetButton onReset={handleReset} />
-      <IdeaList ideas={ideas} />
+      <IdeaList ideas={ideas} onDeleteIdea={handleDeleteIdea} />
     </div>
   );
 }

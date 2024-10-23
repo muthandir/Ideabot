@@ -3,9 +3,10 @@ import { Idea } from '../types/idea';
 
 interface IdeaListProps {
   ideas: Idea[];
+  onDeleteIdea: (id: number) => void;
 }
 
-function IdeaList({ ideas }: IdeaListProps) {
+function IdeaList({ ideas, onDeleteIdea }: IdeaListProps) {
   return (
     <div className="idea-list">
       <h2>Saved Ideas</h2>
@@ -17,6 +18,11 @@ function IdeaList({ ideas }: IdeaListProps) {
             <li key={idea.id}>
               <p>{idea.content}</p>
               <small>{new Date(idea.createdAt!).toLocaleString()}</small>
+              <button 
+                onClick={() => onDeleteIdea(idea.id!)}
+              >
+                X
+              </button>
             </li>
           ))}
         </ul>
