@@ -274,3 +274,44 @@ button:hover {
     100% { transform: rotate(360deg); }
   }
   
+
+
+/* Add this to your chat.css or relevant CSS file */
+.idea-list li.recent-idea {
+    background-color: #4a4a4a; /* Slightly brighter background */
+    border: 1px solid #666; /* Optional: change border color */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Optional: Add a hover effect for the recent idea */
+.idea-list li.recent-idea:hover {
+    background-color: #5a5a5a; /* Change background on hover */
+}
+
+/* Add this to your chat.css or relevant CSS file */
+.badge {
+    background-color: #007bff; /* Badge background color */
+    color: white; /* Badge text color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 3px 8px; /* Padding around the text */
+    font-size: 0.8em; /* Font size */
+    margin-left: 10px; /* Space between the badge and the idea content */
+    display: inline-block; /* Ensure it behaves like a block element */
+    animation: pulse 1.5s infinite; /* Apply the pulse animation */
+}
+
+/* Add this to your chat.css or relevant CSS file */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        background-color: #2e853b; /* Initial color */
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: #62b300; /* Color at halfway point */
+    }
+    100% {
+        transform: scale(1);
+        background-color: #2e853b; /* Return to initial color */
+    }
+}

@@ -15,9 +15,13 @@ function IdeaList({ ideas, onDeleteIdea }: IdeaListProps) {
       ) : (
         <ul>
           {ideas.map(idea => (
-            <li key={idea.id}>
+            <li 
+              key={idea.id} 
+              className={idea.isRecent ? 'recent-idea' : ''} // Apply class if isRecent is true
+            >
               <p>{idea.content}</p>
               <small>{new Date(idea.createdAt!).toLocaleString()}</small>
+              {idea.isRecent && <span className="badge">New Idea</span>} {/* Badge for recent ideas */}
               <button 
                 onClick={() => onDeleteIdea(idea.id!)}
               >

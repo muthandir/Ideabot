@@ -59,6 +59,7 @@ function ChatInterface({
     const ideaDto: Idea = {
       content: messageText,
       chatId: chatId,
+      isRecent: true,
     };
 
     setLoadingSave(chatId); // Set loading state for the specific chatId
