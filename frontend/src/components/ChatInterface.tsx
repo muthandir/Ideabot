@@ -47,9 +47,14 @@ function ChatInterface({
       await onSaveMessage(botMessage);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 429) {
-        setErrorMessage("You are sending messages too quickly. Please wait a moment before trying again."); // Set error message for 429
+        setErrorMessage(
+          "You are sending messages too quickly. Please wait a moment before trying again."
+        ); // Set error message for 429
       } else {
         console.error("Error sending message:", error);
+        setErrorMessage(
+          "An error occurred while sending your message. Please try again later."
+        ); // Set error message for other errors
       }
     } finally {
       setLoadingSend(false); // Reset loading state
@@ -95,7 +100,8 @@ function ChatInterface({
             </div>
           ))
         )}
-        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}{" "}
+        {/* Display error message */}
       </div>
       <Formik
         initialValues={{ message: "" }}

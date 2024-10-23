@@ -5,7 +5,11 @@ import ResetButton from "./components/ResetButton";
 import { Idea } from "./types/idea";
 import "./chat.css"; // Import the CSS file
 import { Message } from "./types/message";
-import { fetchIdeas, saveIdea as apiSaveIdea, resetIdeas } from "./services/api"; // Import the API functions
+import {
+  fetchIdeas,
+  saveIdea as apiSaveIdea,
+  resetIdeas,
+} from "./services/api"; // Import the API functions
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -24,7 +28,8 @@ function App() {
   const handleSaveIdea = async (idea: Idea) => {
     try {
       const savedIdea = await apiSaveIdea(idea); // Use the API function
-      setIdeas((prevIdeas) => [savedIdea, ...prevIdeas]);
+      console.log("Saved idea:", savedIdea);
+      setIdeas((prevIdeas) => [{ ...idea, ...savedIdea }, ...prevIdeas]);
     } catch (error) {
       console.error("Error saving idea:", error);
     }
@@ -46,7 +51,7 @@ function App() {
   };
 
   const handleDeleteIdea = (id: number) => {
-    setIdeas(prevIdeas => prevIdeas.filter(idea => idea.id !== id));
+    setIdeas((prevIdeas) => prevIdeas.filter((idea) => idea.id !== id));
   };
 
   return (
