@@ -5,11 +5,11 @@ import {
   Get,
   UsePipes,
   ValidationPipe,
-} from "@nestjs/common";
-import { IdeasService } from "./ideas.service";
-import { IdeaDto } from "./dto/idea.dto";
+} from '@nestjs/common';
+import { IdeasService } from './ideas.service';
+import { IdeaDto } from './dto/idea.dto';
 
-@Controller("ideas")
+@Controller('ideas')
 export class IdeasController {
   constructor(private readonly ideasService: IdeasService) {}
 
@@ -24,7 +24,7 @@ export class IdeasController {
     return this.ideasService.getAllIdeas();
   }
 
-  @Post("reset")
+  @Post('reset')
   resetIdeas() {
     return this.ideasService.resetIdeas();
   }

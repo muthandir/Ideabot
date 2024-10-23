@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { IdeasModule } from "./ideas/ideas.module";
-import { ChatModule } from "./chat/chat.module";
-import { PrismaModule } from "./prisma/prisma.module";
-import { ThrottlerModule } from "@nestjs/throttler";
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { IdeasModule } from './ideas/ideas.module';
+import { ChatModule } from './chat/chat.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [

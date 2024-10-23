@@ -6,7 +6,8 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class LlmService {
   private readonly apiKey: string;
-  private readonly apiUrl: string = 'https://api.groq.com/openai/v1/chat/completions';
+  private readonly apiUrl: string =
+    'https://api.groq.com/openai/v1/chat/completions';
 
   constructor(
     private readonly httpService: HttpService,
@@ -28,7 +29,7 @@ export class LlmService {
           },
           {
             headers: {
-              'Authorization': `Bearer ${this.apiKey}`,
+              Authorization: `Bearer ${this.apiKey}`,
               'Content-Type': 'application/json',
             },
           },
@@ -36,7 +37,10 @@ export class LlmService {
       );
       return response.data.choices[0].message.content.trim();
     } catch (error) {
-      console.error('Error calling Groq API:', error.response?.data || error.message);
+      console.error(
+        'Error calling Groq API:',
+        error.response?.data || error.message,
+      );
       throw new Error('Failed to generate response from LLM');
     }
   }

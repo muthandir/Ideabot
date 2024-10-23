@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
-import { IdeaResponseDto } from "./dto/idea.dto";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { IdeaResponseDto } from './dto/idea.dto';
 
 @Injectable()
 export class IdeasService {
@@ -27,7 +27,7 @@ export class IdeasService {
           },
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     });
 
     // Map the response to include the description from the chat entity
