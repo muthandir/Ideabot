@@ -4,6 +4,7 @@ import IdeaList from "./components/IdeaList";
 import ResetButton from "./components/ResetButton";
 import axios from "axios";
 import { Idea } from "./types/idea";
+import './chat.css'; // Import the CSS file
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -28,7 +29,8 @@ function App() {
 
   const handleReset = async () => {
     try {
-      await axios.post("http://localhost:3001/reset");
+      console.log("Resetting");
+      //await axios.post("http://localhost:3001/reset");
       setIdeas([]);
     } catch (error) {
       console.error("Error resetting:", error);

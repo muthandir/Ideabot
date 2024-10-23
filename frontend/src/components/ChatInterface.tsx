@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Idea } from "../types/idea";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -23,14 +23,12 @@ const validationSchema = Yup.object().shape({
 
 function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
 
   const sendMessage = async (text: string) => {
     if (text.trim() === "") return;
 
     const newMessage: Message = { text, sender: "user" };
-    setMessages([...messages, newMessage]);
-    setInput("");
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     try {
       const response = await axios.post<{ response: string; chatId: number }>(
@@ -86,15 +84,21 @@ function ChatInterface({ onSaveIdea }: ChatInterfaceProps) {
       >
         {({ isSubmitting }) => (
           <Form className="chat-input">
-            <Field type="text" name="message" />
+            <div className="input-wrapper">
+              <Field
+                type="text"
+                name="message"
+                placeholder="Type your message..."
+              />
+              <ErrorMessage
+                name="message"
+                component="p"
+                className="error-message"
+              />
+            </div>
             <button type="submit" disabled={isSubmitting}>
               Send
             </button>
-            <ErrorMessage
-              name="message"
-              component="p"
-              className="error-message"
-            />
           </Form>
         )}
       </Formik>
