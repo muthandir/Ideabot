@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Idea } from "../types/idea";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Message } from "../types/message";
+import { sendChatMessage } from "../services/api"; // Import the API functions
 
 interface ChatInterfaceProps {
   onSaveIdea: (idea: Idea) => Promise<void>;
@@ -35,18 +35,12 @@ function ChatInterface({
     setLoadingSend(true); // Set loading state for send button
 
     try {
-      const response = await axios.post<{ response: string; chatId: number }>(
-        "https://ideabot-vo2n.onrender.com/chat",
-        {
-          message: text,
-        }
-      );
+      const response = await sendChatMessage(text); // Use the API function
       const botMessage: Message = {
-        text: response.data.response,
-        chatId: response.data.chatId,
+        text: response.response,
+        chatId: response.chatId,
         sender: "bot",
       };
-      console.log("Bot message:", botMessage);
       await onSaveMessage(botMessage);
     } catch (error) {
       console.error("Error sending message:", error);

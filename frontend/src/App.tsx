@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import ChatInterface from "./components/ChatInterface";
 import IdeaList from "./components/IdeaList";
 import ResetButton from "./components/ResetButton";
-import axios from "axios";
 import { Idea } from "./types/idea";
 import "./chat.css"; // Import the CSS file
 import { Message } from "./types/message";
+import { fetchIdeas, saveIdea as apiSaveIdea, resetIdeas } from "./services/api"; // Import the API functions
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -14,18 +14,17 @@ function App() {
   >([]);
 
   useEffect(() => {
-    fetchIdeas();
+    const loadIdeas = async () => {
+      const fetchedIdeas = await fetchIdeas();
+      setIdeas(fetchedIdeas);
+    };
+    loadIdeas();
   }, []);
 
   const handleSaveIdea = async (idea: Idea) => {
     try {
-      console.log("Saving idea:", idea);
-      const response = await axios.post<Idea>(
-        "https://ideabot-vo2n.onrender.com/ideas",
-        idea
-      );
-      console.log("Idea saved:", { ...idea, ...response.data });
-      setIdeas((prevIdeas) => [{ ...idea, ...response.data }, ...prevIdeas]);
+      const savedIdea = await apiSaveIdea(idea); // Use the API function
+      setIdeas((prevIdeas) => [savedIdea, ...prevIdeas]);
     } catch (error) {
       console.error("Error saving idea:", error);
     }
@@ -38,21 +37,11 @@ function App() {
   const handleReset = async () => {
     try {
       console.log("Resetting");
-      await axios.post("https://ideabot-vo2n.onrender.com/ideas/reset");
+      await resetIdeas(); // Use the API function
       setIdeas([]);
       setMessages([]); // Clear chat messages
     } catch (error) {
       console.error("Error resetting:", error);
-    }
-  };
-
-  const fetchIdeas = async () => {
-    try {
-      console.log("Fetching ideas");
-      const response = await axios.get<Idea[]>("https://ideabot-vo2n.onrender.com/ideas");
-      setIdeas((prevIdeas) => response.data);
-    } catch (error) {
-      console.error("Error fetching ideas:", error);
     }
   };
 

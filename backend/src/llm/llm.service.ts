@@ -34,7 +34,6 @@ export class LlmService {
           },
         ),
       );
-      console.log("Response:", response.data.choices[0].message.content.trim());
       return response.data.choices[0].message.content.trim();
     } catch (error) {
       console.error('Error calling Groq API:', error.response?.data || error.message);
