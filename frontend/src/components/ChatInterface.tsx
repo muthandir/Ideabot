@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Message } from "../types/message";
 import { sendChatMessage } from "../services/api"; // Import the API functions
+import axios from "axios"; // Import axios for error handling
 
 interface ChatInterfaceProps {
   onSaveIdea: (idea: Idea) => Promise<void>;
@@ -25,6 +26,7 @@ function ChatInterface({
 }: ChatInterfaceProps) {
   const [loadingSend, setLoadingSend] = useState(false); // Loading state for send button
   const [loadingSave, setLoadingSave] = useState<number | null>(null); // Loading state for save button
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error messages
 
   const sendMessage = async (text: string) => {
     if (text.trim() === "") return;
@@ -33,6 +35,7 @@ function ChatInterface({
     await onSaveMessage(newMessage);
 
     setLoadingSend(true); // Set loading state for send button
+    setErrorMessage(null); // Reset error message
 
     try {
       const response = await sendChatMessage(text); // Use the API function
@@ -43,7 +46,11 @@ function ChatInterface({
       };
       await onSaveMessage(botMessage);
     } catch (error) {
-      console.error("Error sending message:", error);
+      if (axios.isAxiosError(error) && error.response?.status === 429) {
+        setErrorMessage("You are sending messages too quickly. Please wait a moment before trying again."); // Set error message for 429
+      } else {
+        console.error("Error sending message:", error);
+      }
     } finally {
       setLoadingSend(false); // Reset loading state
     }
@@ -88,6 +95,7 @@ function ChatInterface({
             </div>
           ))
         )}
+        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
       </div>
       <Formik
         initialValues={{ message: "" }}
