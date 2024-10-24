@@ -30,3 +30,5 @@ logs
 pids
 *.pid
 *.see
+
+todo.txt
