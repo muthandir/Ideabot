@@ -10,7 +10,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 - **Backend**: NestJS, TypeScript, Prisma, PostgreSQL
 - **Styling**: CSS Variables for theming
 - **Deployment**: Docker for containerization
-- **Api documentation**: Swagger
+- **Api documentation**: Swagger: [remote](https://ideabot-vo2n.onrender.com/api/docs) or [local](http://localhost:3001/api/docs)
 
 ## Features
 
