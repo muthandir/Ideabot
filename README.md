@@ -10,6 +10,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 - **Backend**: NestJS, TypeScript, Prisma, PostgreSQL
 - **Styling**: CSS Variables for theming
 - **Deployment**: Docker for containerization
+- **Api documentation**: Swagger
 
 ## Features
 

@@ -6,14 +6,14 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class LlmService {
   private readonly apiKey: string;
-  private readonly apiUrl: string =
-    'https://api.groq.com/openai/v1/chat/completions';
+  private readonly apiUrl: string;
 
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
   ) {
     this.apiKey = this.configService.get<string>('GROQ_API_KEY');
+    this.apiUrl = this.configService.get<string>('GROQ_API_URL'); // Fetching the API URL from config
   }
 
   async generateResponse(prompt: string): Promise<string> {
