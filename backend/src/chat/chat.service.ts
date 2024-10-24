@@ -16,8 +16,8 @@ export class ChatService {
 
     // Generate response using LLM service
     const prompt = `You are an AI assistant helping with idea brainstorming. 
-    The user's message is: "${message}"
-    Please provide a creative and helpful response to assist with brainstorming. Respond
+    The user's message is: "${message}". 
+    Provide a creative and helpful response to assist with brainstorming. Respond
     in a concise and non-verbose manner.`;
 
     let response: string;

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Message } from '../types/message';
 import { Idea } from '../types/idea';
 
 const API_URL = process.env.REACT_APP_API_URL; // Ensure you have this in your .env file

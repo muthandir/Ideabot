@@ -40,7 +40,7 @@ export class IdeasService {
     }));
   }
 
-  async resetIdeas() {
-    await this.prisma.idea.deleteMany();
+  resetIdeas() {
+    return this.prisma.idea.deleteMany();
   }
 }

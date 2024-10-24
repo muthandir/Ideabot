@@ -17,6 +17,10 @@ This project is a full-stack application that allows users to brainstorm ideas t
 - **Environment Configuration**: Uses `.env` files for sensitive information.
 - **Rate Limiter**: A rate limiter is implemented to prevent abuse.
 
+## Potential Improvements
+- **Logging**: Improved logging can be implemented for better transporting the logs to the desired log repository (like Betterstack, Splunk etc.).
+- **LLM Prompt Administration**: The functionality to manage and customize prompts wrapping the user messages to be sent to the language model can be implemented.
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -26,6 +30,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 1. Ensure you have Docker and Docker Compose installed.
 2. Navigate to the root directory of the project.
 3. Start the application using Docker Compose:
+
    ```bash
    docker-compose up
    ```
@@ -34,6 +39,10 @@ This project is a full-stack application that allows users to brainstorm ideas t
 ### Accessing the Application
 - The frontend will be available at `http://localhost`.
 - The backend API will be accessible at `http://localhost:3001`.
+
+## CI-CD and Hosting
+- CI/CD is set up for the main branch on GitHub to deploy to Render.com.
+- The application can be accessed at [https://ideabot-x511.onrender.com](https://ideabot-x511.onrender.com).
 
 ### Stopping the Application
 To stop the application, you can use:
@@ -51,11 +60,6 @@ docker-compose down
   GROQ_API_KEY=your_groq_api_key_here
   DATABASE_URL="postgresql://user:password@localhost:5432/chatbotdb?schema=public"
   ```
-
-## CI-CD and hosting
-- CI/CD is setup for the main branch on github to deploy to render.com
-- The application can be accessed at [https://ideabot-x511.onrender.com](https://ideabot-x511.onrender.com)
-
 
 ## API Endpoints
 - **POST /chat**: Send a message to the chatbot and receive a response.

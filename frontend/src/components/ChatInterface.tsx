@@ -106,8 +106,8 @@ function ChatInterface({
       <Formik
         initialValues={{ message: '' }}
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) => {
-          sendMessage(values.message);
+        onSubmit={async (values, { resetForm }) => {
+          await sendMessage(values.message);
           resetForm();
         }}
       >

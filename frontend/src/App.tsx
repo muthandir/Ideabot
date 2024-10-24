@@ -22,13 +22,12 @@ function App() {
       const fetchedIdeas = await fetchIdeas();
       setIdeas(fetchedIdeas);
     };
-    loadIdeas();
+    void loadIdeas();
   }, []);
 
   const handleSaveIdea = async (idea: Idea) => {
     try {
       const savedIdea = await apiSaveIdea(idea); // Use the API function
-      console.log('Saved idea:', savedIdea);
       setIdeas((prevIdeas) => [{ ...idea, ...savedIdea }, ...prevIdeas]);
     } catch (error) {
       console.error('Error saving idea:', error);
