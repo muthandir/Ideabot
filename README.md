@@ -21,6 +21,17 @@ This project is a full-stack application that allows users to brainstorm ideas t
 - **Logging**: Improved logging can be implemented for better transporting the logs to the desired log repository (like Betterstack, Splunk etc.).
 - **LLM Prompt Administration**: The functionality to manage and customize prompts wrapping the user messages to be sent to the language model can be implemented.
 
+### Explanation of the Tests:
+- **llm.service.spec.ts**: Tests the LlmService for generating responses and handling errors when calling the Groq API.
+- **chat.service.spec.ts**: Tests the ChatService for generating responses, retrieving chat history, and resetting chat messages.
+- **ideas.service.spec.ts**: Tests the IdeasService for saving ideas, retrieving all ideas, and resetting ideas.
+### Running the TestsTo run the tests, you can use the following command in your terminal:bash
+
+```bash 
+cd backend
+npm run test
+```
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -32,7 +43,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 3. Start the application using Docker Compose:
 
    ```bash
-   docker-compose up
+   docker-compose up --build
    ```
    This command will build the images and start the containers for the frontend, backend, and database services.
 
