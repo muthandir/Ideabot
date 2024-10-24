@@ -55,23 +55,48 @@ p.s. Because the render api is a free instance, it will spin down with inactivit
 
 - Node.js (v18 or higher)
 
+## Running the app using your local host
 ### Environment Variables
 
 - **Frontend**: Create a `.env` file in the `frontend` directory with the following:
   ```plaintext
+  PORT=3000
   REACT_APP_API_URL=http://localhost:3001
   ```
 - **Backend**: Create a `.env` file in the `backend` directory with the following:
   ```plaintext
-  GROQ_API_KEY=your_groq_api_key_here
+  PORT=3001
+  NODE_ENV=development
   DATABASE_URL="postgresql://user:password@localhost:5432/chatbotdb?schema=public"
+  GROQ_API_KEY=abc
+  GROQ_API_URL=https://api.groq.com/openai/v1/chat/completions
   ```
 
-### Using Docker Compose
+
+This will get the db running:
+```
+docker-compose up db
+```
+
+In a new terminal run the backend:
+```
+cd backend/
+npm run start:dev
+```
+
+In a new terminal run the frontend:
+```
+cd frontend/
+npm start
+```
+## Running the app using Docker 
 
 1. Ensure you have Docker and Docker Compose installed.
-2. Navigate to the root directory of the project.
-3. Start the application using Docker Compose:
+2. Create the .docker.env files similar to env files above. Consider the possible changes:
+   - networking configuration: for example the db host can change to "postgresql://user:password@db:5432/chatbotdb?schema=public" using in-docker network naming rather than localhost.
+   - port assignments
+3. Navigate to the root directory of the project.
+4. Start the application using Docker Compose:
 
    ```bash
    docker-compose up --build
@@ -89,7 +114,7 @@ docker-compose down
 
 ### Accessing the Application
 
-- The frontend will be available at `http://localhost`.
+- The frontend will be available at `http://localhost:3000`.
 - The backend API will be accessible at `http://localhost:3001`.
 
 ## API Endpoints
