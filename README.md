@@ -23,11 +23,11 @@ This project is a full-stack application that allows users to brainstorm ideas t
 
 ## Potential Improvements
 
-- **Logging**: Improved logging can be implemented for better transporting the logs to the desired log repository (like Betterstack, Splunk etc.).
-- **User Management**: Registration, login, authentication and profile management modules can be implemented in the future.
+- **Logging**: Improved logging can be implemented for better transporting the logs to the desired log repository (like Betterstack, Splunk, etc.).
+- **User Management**: Registration, login, authentication, and profile management modules can be implemented in the future.
 - **LLM Prompt Administration**: The functionality to manage and customize prompts wrapping the user messages to be sent to the language model can be implemented.
 - **Frontend Tests**: I normally use Playwright for writing the UI tests and use it for local testing + CI/CD testing with the headless browser option.
-
+- **Monitoring**: Implementing monitoring tools (such as Prometheus, Grafana, or New Relic) to track application performance, user interactions, and error rates.
 
 ## Tests:
 
