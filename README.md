@@ -20,6 +20,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 ## Potential Improvements
 - **Logging**: Improved logging can be implemented for better transporting the logs to the desired log repository (like Betterstack, Splunk etc.).
 - **LLM Prompt Administration**: The functionality to manage and customize prompts wrapping the user messages to be sent to the language model can be implemented.
+- **Frontend Tests**: I normally use Playwright for writing the UI tests and use it for local testing + CI/CD testing with the headless browser option.
 
 ### Explanation of the Tests:
 - **llm.service.spec.ts**: Tests the LlmService for generating responses and handling errors when calling the Groq API.
