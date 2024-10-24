@@ -117,6 +117,20 @@ docker-compose down
 - The frontend will be available at `http://localhost:3000`.
 - The backend API will be accessible at `http://localhost:3001`.
 
+## Updating the prisma database schema
+
+_See [best practices from prisma here](https://www.prisma.io/docs/guides/migrate/prototyping-schema-db-push)._
+
+
+Overview:
+
+1. Make changes to the schema in `prisma/schema.prisma`.
+2. Start the local database container (see above).
+3. run `npx prisma db push` to test the change on the local database.
+4. Keep making changes until you're happy with them.
+5. Once you're happy with them, you can `git stash` to stash the changes you made to the schema and run push once more and go back to what you had. Then `git stash pop` to get the changes back (which you know work, due to your prototyping in steps 1-4).
+6. Finally, run `npm run prisma:dev <name>` (or `npx prisma migrate --name <name>`) create a migration that creates the changes. You can skip step 5, but that will create drift in the database that will force you to reset it completely.
+
 ## API Endpoints
 
 - **POST /chat**: Send a message to the chatbot and receive a response.
