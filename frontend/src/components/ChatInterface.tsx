@@ -76,31 +76,47 @@ function ChatInterface({
   };
 
   return (
-    <div className="chat-interface">
-      <div className="chat-history">
+    <div className="bg-gray-700 rounded-lg p-4 mb-4">
+      <div className="max-h-96 overflow-y-auto mb-4 p-2 bg-gray-800 rounded-lg">
         {messages.length === 0 ? (
-          <p>Ready to do some brainstorming?</p>
+          <p className="text-gray-400">Ready to do some brainstorming?</p>
         ) : (
           messages.map((message, index) => (
-            <div key={index} className={`message ${message.sender}`}>
-              {message.text}
-              {message.sender === 'bot' && message.chatId && (
-                <button
-                  type="button"
-                  onClick={() => handleSaveIdea(message.text, message.chatId!)}
-                  disabled={loadingSave === message.chatId} // Disable if loading
-                >
-                  {loadingSave === message.chatId ? (
-                    <span className="spinner" /> // Show spinner
-                  ) : (
-                    'Save Idea'
-                  )}
-                </button>
-              )}
+            <div
+              key={index}
+              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-2`}
+            >
+              <div
+                className={`relative p-3 rounded-lg transition-all duration-300 ease-in-out ${
+                  message.sender === 'user'
+                    ? 'bg-[#833d3d6b] text-white rounded-br-none' // Updated background color for user messages
+                    : 'bg-gray-600 text-white rounded-bl-none'
+                }`}
+              >
+                {message.text}
+                {message.sender === 'bot' && message.chatId && (
+                  <div className="absolute right-2 bottom-2">
+                    <button
+                      type="button"
+                      className="group w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:bg-gray-500 hover:w-32"
+                      onClick={() =>
+                        handleSaveIdea(message.text, message.chatId!)
+                      }
+                      disabled={loadingSave === message.chatId} // Disable if loading
+                    >
+                      <span className="text-lg group-hover:hidden">⭐</span>{' '}
+                      {/* Star icon */}
+                      <span className="text-sm absolute left-10 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
+                        Save Idea
+                      </span>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           ))
         )}
-        {errorMessage && <p className="error-message">{errorMessage}</p>}{' '}
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}{' '}
         {/* Display error message */}
       </div>
       <Formik
@@ -112,20 +128,23 @@ function ChatInterface({
         }}
       >
         {({ isSubmitting }) => (
-          <Form className="chat-input">
-            <div className="input-wrapper">
-              <Field
-                type="text"
-                name="message"
-                placeholder="Type your message..."
-              />
-              <ErrorMessage
-                name="message"
-                component="p"
-                className="error-message"
-              />
-            </div>
-            <button type="submit" disabled={isSubmitting || loadingSend}>
+          <Form className="flex items-center">
+            <Field
+              type="text"
+              name="message"
+              placeholder="Type your message..."
+              className="flex-1 p-2 border border-gray-600 rounded-lg bg-gray-800 text-white"
+            />
+            <ErrorMessage
+              name="message"
+              component="p"
+              className="text-red-500"
+            />
+            <button
+              type="submit"
+              disabled={isSubmitting || loadingSend}
+              className="ml-2 bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-500"
+            >
               {loadingSend ? <span className="spinner" /> : 'Send'}
             </button>
           </Form>
