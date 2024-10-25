@@ -21,7 +21,7 @@ function IdeaList({ ideas, onDeleteIdea }: IdeaListProps) {
             >
               <button
                 onClick={() => onDeleteIdea(idea.id!)}
-                className="absolute top-2 right-0.5 w-6 h-6 bg-gray-600 text-white rounded-full flex items-center justify-center hover:bg-gray-500"
+                className="absolute top-2 right-[-20px] w-6 h-6 bg-gray-600 text-white rounded flex items-center justify-center hover:bg-gray-500"
               >
                 <span className="text-sm">X</span> {/* Smaller X */}
               </button>

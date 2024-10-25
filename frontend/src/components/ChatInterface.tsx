@@ -98,16 +98,19 @@ function ChatInterface({
                   <div className="absolute right-1 bottom-1">
                     <button
                       type="button"
-                      className="group w-8 h-8 bg-[#ff000066]-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:bg-blue-600 hover:w-32"
+                      className="group w-8 h-8 bg-[#ff000066]-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:bg-blue-600 hover:w-16"
                       onClick={() =>
                         handleSaveIdea(message.text, message.chatId!)
                       }
                       disabled={loadingSave === message.chatId} // Disable if loading
                     >
-                      <span className="text-lg group-hover:hidden">⭐</span>{' '}
-                      {/* Star icon */}
-                      <span className="text-sm absolute left-10 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
-                        Save Idea
+                      {loadingSave === message.chatId ? ( // Show spinner if loading
+                        <span className="w-4 h-4 border-2 border-t-2 border-white rounded-full animate-spin"></span>
+                      ) : (
+                        <span className="text-lg group-hover:hidden">⭐</span> // Star icon
+                      )}
+                      <span className="text-sm absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100">
+                        Save
                       </span>
                     </button>
                   </div>
@@ -142,7 +145,7 @@ function ChatInterface({
                 className="ml-2 bg-blue-600 text-white rounded-lg px-4 py-2 flex items-center"
               >
                 {loadingSend ? (
-                  <span className="spinner border-2 border-t-2 border-white rounded-full w-4 h-4 animate-spin"></span>
+                  <span className="w-5 h-5 border-4 border-t-4 border-white rounded-full animate-spin"></span> // Tailwind spinner
                 ) : (
                   'Send'
                 )}
