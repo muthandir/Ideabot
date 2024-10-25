@@ -17,7 +17,7 @@ function IdeaList({ ideas, onDeleteIdea }: IdeaListProps) {
           {ideas.map((idea) => (
             <li
               key={idea.id}
-              className={`relative p-3 mb-2 rounded-lg bg-gray-700 ${idea.isRecent ? 'border border-blue-500' : ''}`} // Apply class if isRecent is true
+              className={`relative p-3 mb-2 rounded-lg bg-[#2a2a2a] duration-100 hover:bg-[#3a3a3a] ${idea.isRecent ? 'border border-blue-500' : 'border border-[#444]'}`} // Apply class if isRecent is true
             >
               <button
                 onClick={() => onDeleteIdea(idea.id!)}

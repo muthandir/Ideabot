@@ -3,7 +3,6 @@ import ChatInterface from './components/ChatInterface';
 import IdeaList from './components/IdeaList';
 import ResetButton from './components/ResetButton';
 import { Idea } from './types/idea';
-import './chat.css';
 import { Message } from './types/message';
 import {
   fetchIdeas,
@@ -54,7 +53,7 @@ function App() {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
+    <div className="max-w-lg mx-auto bg-[#1e1e1e] rounded-lg shadow-lg p-6">
       <h1 className="text-2xl text-white">Idea Brainstorming Chatbot</h1>
       <ChatInterface
         onSaveIdea={handleSaveIdea}

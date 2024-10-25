@@ -6,7 +6,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 
 ## Tech Stack
 
-- **Frontend**: React, TypeScript, Formik, Yup, Axios
+- **Frontend**: React, TypeScript, Formik, Yup, Axios, Tailwind
 - **Backend**: NestJS, TypeScript, Prisma, PostgreSQL
 - **Styling**: CSS Variables for theming
 - **Deployment**: Docker for containerization
@@ -35,7 +35,7 @@ This project is a full-stack application that allows users to brainstorm ideas t
 - **chat.service.spec.ts**: Tests the ChatService for generating responses, retrieving chat history, and resetting chat messages.
 - **ideas.service.spec.ts**: Tests the IdeasService for saving ideas, retrieving all ideas, and resetting ideas.
 
-### Running the Tests 
+### Running the Tests
 
 ```bash
 cd backend
@@ -47,7 +47,7 @@ npm run test
 - CI/CD is set up for the main branch on GitHub to deploy to Render.com.
 - The application can be accessed at [https://ideabot-x511.onrender.com](https://ideabot-x511.onrender.com).
 
-p.s. Because the render api is a free instance, it will spin down with inactivity, which can delay requests by 50 seconds or more while it is inactive.
+<p style="color: red;">p.s. Because the render api is a free instance, it will spin down with inactivity, which can delay requests by 50 seconds or more while it is inactive.</p>
 
 ## Setup Instructions
 
@@ -56,6 +56,7 @@ p.s. Because the render api is a free instance, it will spin down with inactivit
 - Node.js (v18 or higher)
 
 ## Running the app using your local host
+
 ### Environment Variables
 
 - **Frontend**: Create a `.env` file in the `frontend` directory with the following:
@@ -72,24 +73,27 @@ p.s. Because the render api is a free instance, it will spin down with inactivit
   GROQ_API_URL=https://api.groq.com/openai/v1/chat/completions
   ```
 
-
 This will get the db running:
+
 ```
 docker-compose up db
 ```
 
 In a new terminal run the backend:
+
 ```
 cd backend/
 npm run start:dev
 ```
 
 In a new terminal run the frontend:
+
 ```
 cd frontend/
 npm start
 ```
-## Running the app using Docker 
+
+## Running the app using Docker
 
 1. Ensure you have Docker and Docker Compose installed.
 2. Create the .docker.env files similar to env files above. Consider the possible changes:
@@ -120,7 +124,6 @@ docker-compose down
 ## Updating the prisma database schema
 
 _See [best practices from prisma here](https://www.prisma.io/docs/guides/migrate/prototyping-schema-db-push)._
-
 
 Overview:
 
