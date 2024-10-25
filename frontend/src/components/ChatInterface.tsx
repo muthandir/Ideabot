@@ -87,10 +87,10 @@ function ChatInterface({
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-2`}
             >
               <div
-                className={`relative p-3 rounded-lg transition-all duration-300 ease-in-out ${
+                className={`relative p-3 transition-all duration-300 ease-in-out ${
                   message.sender === 'user'
-                    ? 'bg-[#833d3d6b] text-white rounded-br-none' // Updated background color for user messages
-                    : 'bg-[#4a4a4a] text-white rounded-bl-none'
+                    ? 'bg-[#833d3d6b] text-white rounded-2xl rounded-br-none' // Increased roundness for user messages
+                    : 'bg-[#4a4a4a] text-white rounded-2xl rounded-bl-none' // Increased roundness for bot messages
                 }`}
               >
                 {message.text}
