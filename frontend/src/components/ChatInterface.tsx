@@ -77,7 +77,7 @@ function ChatInterface({
 
   return (
     <div className="bg-gray-700 rounded-lg p-4 mb-4">
-      <div className="max-h-96 overflow-y-auto mb-4 p-2 bg-gray-800 rounded-lg">
+      <div className="h-96 overflow-y-auto mb-4 p-2 bg-gray-800 rounded-lg">
         {messages.length === 0 ? (
           <p className="text-gray-400">Ready to do some brainstorming?</p>
         ) : (
@@ -95,10 +95,10 @@ function ChatInterface({
               >
                 {message.text}
                 {message.sender === 'bot' && message.chatId && (
-                  <div className="absolute right-2 bottom-2">
+                  <div className="absolute right-1 bottom-1">
                     <button
                       type="button"
-                      className="group w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:bg-gray-500 hover:w-32"
+                      className="group w-8 h-8 bg-[#ff000066]-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:bg-[#5a4444eb] hover:w-32"
                       onClick={() =>
                         handleSaveIdea(message.text, message.chatId!)
                       }
@@ -128,25 +128,31 @@ function ChatInterface({
         }}
       >
         {({ isSubmitting }) => (
-          <Form className="flex items-center">
-            <Field
-              type="text"
-              name="message"
-              placeholder="Type your message..."
-              className="flex-1 p-2 border border-gray-600 rounded-lg bg-gray-800 text-white"
-            />
+          <Form className="flex flex-col">
+            {' '}
+            {/* Use flex column to stack elements */}
+            <div className="flex items-center">
+              {' '}
+              {/* Flex container for input and button */}
+              <Field
+                type="text"
+                name="message"
+                placeholder="Type your message..."
+                className="flex-1 p-2 border border-gray-600 rounded-lg bg-gray-800 text-white"
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting || loadingSend}
+                className="ml-2 bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-500"
+              >
+                {loadingSend ? <span className="spinner" /> : 'Send'}
+              </button>
+            </div>
             <ErrorMessage
               name="message"
               component="p"
-              className="text-red-500"
+              className="text-red-500 mt-1 w-full" // Add margin-top for spacing and full width
             />
-            <button
-              type="submit"
-              disabled={isSubmitting || loadingSend}
-              className="ml-2 bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-500"
-            >
-              {loadingSend ? <span className="spinner" /> : 'Send'}
-            </button>
           </Form>
         )}
       </Formik>
